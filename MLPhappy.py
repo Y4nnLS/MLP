@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import pandas as pd
 
-numEpocas = 1000      # Número de épocas.
+numEpocas = 10000      # Número de épocas.
 q = 143               # Número de padrões. (Assuming you have 100 data points)
 
-eta = 0.03            # Taxa de aprendizado (é interessante alterar para avaliar o comportamento)
+eta = 0.01            # Taxa de aprendizado (é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (infoavail, housecost, schoolquality, policetrust)
 N = 8                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (Iris-setosa or Iris-versicolor)

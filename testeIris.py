@@ -15,7 +15,7 @@ q = 100               # Número de padrões. (Assuming you have 100 data points)
 
 eta = 0.01            # Taxa de aprendizado (é interessante alterar para avaliar o comportamento)
 m = 4                 # Número de neurônios na camada de entrada (SepalLength, SepalWidth, PetalLength, PetalWidth)
-N = 8                 # Número de neurônios na camada escondida.
+N = 2                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (Iris-setosa or Iris-versicolor)
 
 # Carrega os dados de treinamento
