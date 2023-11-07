@@ -13,10 +13,10 @@ import pandas as pd
 numEpocas = 10000      # Número de épocas.
 q = 143               # Número de padrões. (Assuming you have 100 data points)
 
-eta = 0.01            # Taxa de aprendizado (é interessante alterar para avaliar o comportamento)
+eta = 0.3            # Taxa de aprendizado (é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (infoavail, housecost, schoolquality, policetrust)
 N = 8                 # Número de neurônios na camada escondida.
-L = 1                 # Número de neurônios na camada de saída. (Iris-setosa or Iris-versicolor)
+L = 1                 # Número de neurônios na camada de saída. ()
 
 # Carrega os dados de treinamento
 df = pd.read_csv('happydata.csv')
@@ -29,7 +29,7 @@ policetrust = df['policetrust'].to_numpy()
 streetquality = df['streetquality'].to_numpy()
 events = df['events'].to_numpy()
 
-# Converta a coluna 'happy' em valores numéricos (0 para Iris-setosa e 1 para Iris-versicolor)
+# Extrai os dados da coluna 'happy' que é a saida esperada
 happy = df['happy'].to_numpy()
 
 # Inicia aleatoriamente as matrizes de pesos.
@@ -107,13 +107,24 @@ for i in range(q):
     o1b = np.insert(o1, 0, bias)
 
     # Neural network output
-    Y = np.where(W2.dot(o1b) <= 0, 1, 0)
+    # Y = np.where(W2.dot(o1b) <= 0, 1, 0)
+    Y = np.tanh(W2.dot(o1b))            # Equações (3) e (4) juntas.
+
+                                                                                                        # testar outras funções de ativação como por exemplo a sigmoid, softmax
+
 
     # Extract a single element from the happy array
     target = happy[i]
 
     Error_Test[i] = target - Y[0]
+# para revisão as saidas
+# f = open('a.sol', 'w')
+# f.write(str(happy))
+# f.close()
+# f = open('my.sol', 'w')
+# f.write(str(Error_Test))
+# f.close()
 
-
+print(f'Happy:\n{happy}')
 print(f'Error_Test:\n{Error_Test}')
 print(f'Round:\n{np.round(Error_Test) - happy[:q]}')
