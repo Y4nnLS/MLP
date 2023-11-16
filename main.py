@@ -27,12 +27,12 @@ happy = df['happy'].to_numpy()
 
 d = np.array_split(happy, 3)[0]
 
-numEpocas = 15000      # Número de épocas.
+numEpocas = 1000      # Número de épocas.
 q = len(df)                # Número de padrões.
 
-eta = 0.01            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
+eta = 0.03            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (peso e PH)
-N = 8                 # Número de neurônios na camada escondida.
+N = 12                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (-1 = Maçã E 1 = Laranja)
 
 # Carrega os dados de treinamento
@@ -143,20 +143,17 @@ for i in range(q):
     Y = np.tanh(W2.dot(o1b))            # Equações (3) e (4) juntas.
     print(Y)
     
-    # Error_Test[i] = d[i] - (Y)
-    Error_Test[i] = d[i % len(d)] - Y[i % len(Y)]
+    Error_Test[i] = d[i] - (Y)
+    # for i, value in enumerate(Y):
+    #     Error_Test[i] = d[i] - value
 
 
-num_erros = 0
-print(np.round(Error_Test))
+erros = 0
+
 for i in range(len(Error_Test)):
-    if np.round(Error_Test[i]) != 0:
-        num_erros += 1
-
-print(Error_Test)
-# print(np.round(Error_Test) - d) #aqui se ela acertou todas o vetor tem que estar zerado
-print(np.round(Error_Test[:len(d)]) - d)
-
-print(f'número de erros: {num_erros}')
-print(f'porcentagem de erros: {(num_erros*100)/q}') 
-
+    if np.round(Error_Test[i]) != 1:
+        erros += 1    
+print(np.round(Error_Test))
+print('erros: ', erros)
+print("Erros: " + str(np.round(Error_Test)))
+print("Percentual: {:.2f}%".format((erros * 100)/q))
