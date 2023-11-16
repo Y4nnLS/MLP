@@ -32,7 +32,7 @@ print(d)
 numEpocas = 400      # Número de épocas.
 q = len(df)                # Número de padrões.
 
-eta = 0.01            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
+eta = 0.03            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (peso e PH)
 N = 8                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (-1 = Maçã E 1 = Laranja)
@@ -146,13 +146,13 @@ for i in range(q):
     print(Y)
     
     Error_Test[i] = d[i] - Y[0]
-    print(d[i] - Y[0])
     # for i, value in enumerate(Y):
     #     Error_Test[i] = d[i] - value
 
 
 erros = 0
-
+result = np.zeros_like(Error_Test)
+result = np.where(Error_Test == 1, 0, 1)
 for i in range(len(Error_Test)):
     if np.round(Error_Test[i]) != 1:
         erros += 1    
@@ -160,3 +160,6 @@ print(np.round(Error_Test))
 print('erros: ', erros)
 print("Erros:\n" + str(np.round(Error_Test)))
 print("Percentual: {:.2f}%".format((erros * 100)/q))
+
+print(result)
+print(d)
