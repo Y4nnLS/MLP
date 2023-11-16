@@ -27,12 +27,12 @@ happy = df['happy'].to_numpy()
 
 d = np.array_split(happy, 3)[0]
 
-numEpocas = 30000      # Número de épocas.
+numEpocas = 15000      # Número de épocas.
 q = len(df)                # Número de padrões.
 
 eta = 0.01            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (peso e PH)
-N = 12                 # Número de neurônios na camada escondida.
+N = 8                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (-1 = Maçã E 1 = Laranja)
 
 # Carrega os dados de treinamento
@@ -81,7 +81,8 @@ for i in range(numEpocas): #repete o numero de vezes terminado, no caso 20
         Y = np.tanh(W4.dot(o1b))            # Equações (3) e (4) juntas.
                                             #Resulta na saída da rede neural
         
-        e = d[j] - Y                        # Equação (5).
+        # e = d[j] - Y                        # Equação (5).
+        e = d[j % len(d)] - Y  # Equação (5).
 
         # Erro Total.
         E[j] = (e.transpose().dot(e))/2     # Equação de erro quadrática.
@@ -92,7 +93,9 @@ for i in range(numEpocas): #repete o numero de vezes terminado, no caso 20
         # Error backpropagation.   
         # Cálculo do gradiente na camada de saída.
         delta2 = np.diag(e).dot((1 - Y*Y))          # Eq. (6)
-        vdelta2 = (W2.transpose()).dot(delta2)      # Eq. (7)
+        # vdelta2 = (W2.transpose()).dot(delta2.reshape(-1, 1))  # Eq. (7)
+        vdelta2 = (W4.transpose()).dot(delta2.reshape(-1, 1))  # Eq. (7)
+
         deltaU = np.diag(1 - o3b*o3b).dot(vdelta2)  # Eq. (8)
         vdeltaU = (W2.transpose()).dot(deltaU[1:])  # Eq. (9)
         deltaX = np.diag(1 - o2b*o2b).dot(vdeltaU)  # Eq. (10)
@@ -131,17 +134,29 @@ for i in range(q):
     # Incluindo o bias. Saída da camada escondida é a entrada da camada
     # de saída.
     o1b = np.insert(o1, 0, bias)
-    o2  = sigmoid(WU.dot(o1b)) 
+    o2  = sigmoid(W2.dot(o1b)) 
     o2b = np.insert(o2, 0, bias)          
-    o3  = sigmoid(WU.dot(o2b)) 
+    o3  = sigmoid(W2.dot(o2b)) 
     o3b = np.insert(o3, 0, bias)
 
     # Neural network output
     Y = np.tanh(W2.dot(o1b))            # Equações (3) e (4) juntas.
     print(Y)
     
-    Error_Test[i] = d[i] - (Y)
-    
+    # Error_Test[i] = d[i] - (Y)
+    Error_Test[i] = d[i % len(d)] - Y[i % len(Y)]
+
+
+num_erros = 0
+print(np.round(Error_Test))
+for i in range(len(Error_Test)):
+    if np.round(Error_Test[i]) != 0:
+        num_erros += 1
+
 print(Error_Test)
-print(np.round(Error_Test) - d) #aqui se ela acertou todas o vetor tem que estar zerado
+# print(np.round(Error_Test) - d) #aqui se ela acertou todas o vetor tem que estar zerado
+print(np.round(Error_Test[:len(d)]) - d)
+
+print(f'número de erros: {num_erros}')
+print(f'porcentagem de erros: {(num_erros*100)/q}') 
 
