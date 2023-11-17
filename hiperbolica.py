@@ -24,9 +24,9 @@ print(d)
 numEpocas = 1000      # Número de épocas.
 q = len(df)                # Número de padrões.
 
-eta = 0.7            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
+eta = 0.01            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (peso e PH)
-N = 8                 # Número de neurônios na camada escondida.
+N = 12                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (-1 = Maçã E 1 = Laranja)
 
 # Carrega os dados de treinamento
