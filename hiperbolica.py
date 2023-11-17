@@ -45,10 +45,6 @@ Etm = np.zeros(numEpocas) #Etm = Erro total médio ==> serve para acompanharmos 
 # bias
 bias = 1
 
-
-# Função de ativação Sigmóide
-def sigmoid(X):
-    return 1/(1+np.exp(-X))
 # Entrada do Perceptron.
 X = np.vstack((infoavail, housecost, schoolquality, policetrust, streetquality, events ))   # concatenação dos dois vetores
 
@@ -64,11 +60,11 @@ for i in range(numEpocas): #repete o numero de vezes terminado, no caso 20
                                        #com unico vetor [bias peso PH]
 
         # Saída da Camada Escondida.
-        o1  = sigmoid(W1.dot(Xb)) 
+        o1  = np.tanh(W1.dot(Xb)) 
         o1b = np.insert(o1, 0, bias)
-        o2  = sigmoid(W2.dot(o1b)) 
+        o2  = np.tanh(W2.dot(o1b)) 
         o2b = np.insert(o2, 0, bias)          
-        o3  = sigmoid(W2.dot(o2b)) 
+        o3  = np.tanh(W2.dot(o2b)) 
         o3b = np.insert(o3, 0, bias)
 
         # Neural network output
@@ -87,7 +83,7 @@ for i in range(numEpocas): #repete o numero de vezes terminado, no caso 20
         # Error backpropagation.   
         # Cálculo do gradiente na camada de saída.
         delta2 = np.diag(e).dot((1 - Y*Y))          # Eq. (6)
-        
+        # vdelta2 = (W2.transpose()).dot(delta2.reshape(-1, 1))  # Eq. (7)
         vdelta2 = (W4.transpose()).dot(delta2.reshape(-1, 1))  # Eq. (7)
 
         deltaU = np.diag(1 - o3b*o3b).dot(vdelta2)  # Eq. (8)
@@ -129,9 +125,9 @@ for i in range(q):
     # Incluindo o bias. Saída da camada escondida é a entrada da camada
     # de saída.
     o1b = np.insert(o1, 0, bias)
-    o2  = sigmoid(W2.dot(o1b)) 
+    o2  = np.tanh(W2.dot(o1b)) 
     o2b = np.insert(o2, 0, bias)          
-    o3  = sigmoid(W2.dot(o2b)) 
+    o3  = np.tanh(W2.dot(o2b)) 
     o3b = np.insert(o3, 0, bias)
 
     # Neural network output
@@ -149,4 +145,4 @@ print(np.round(Error_Test))
 print('erros: ', erros)
 print("Erros:\n" + str(np.round(Error_Test)))
 print("Percentual: {:.2f}%".format((erros * 100)/q))
-print('sigmoid')
+print('hiperbolica')
