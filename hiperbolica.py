@@ -21,10 +21,10 @@ d = happy
 
 print(d)
 
-numEpocas = 400      # Número de épocas.
+numEpocas = 1000      # Número de épocas.
 q = len(df)                # Número de padrões.
 
-eta = 0.03            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
+eta = 0.7            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
 m = 6                 # Número de neurônios na camada de entrada (peso e PH)
 N = 8                 # Número de neurônios na camada escondida.
 L = 1                 # Número de neurônios na camada de saída. (-1 = Maçã E 1 = Laranja)
@@ -83,9 +83,7 @@ for i in range(numEpocas): #repete o numero de vezes terminado, no caso 20
         # Error backpropagation.   
         # Cálculo do gradiente na camada de saída.
         delta2 = np.diag(e).dot((1 - Y*Y))          # Eq. (6)
-        # vdelta2 = (W2.transpose()).dot(delta2.reshape(-1, 1))  # Eq. (7)
-        vdelta2 = (W4.transpose()).dot(delta2.reshape(-1, 1))  # Eq. (7)
-
+        vdelta2 = (W4.transpose()).dot(delta2)
         deltaU = np.diag(1 - o3b*o3b).dot(vdelta2)  # Eq. (8)
         vdeltaU = (W2.transpose()).dot(deltaU[1:])  # Eq. (9)
         deltaX = np.diag(1 - o2b*o2b).dot(vdeltaU)  # Eq. (10)
@@ -145,4 +143,3 @@ print(np.round(Error_Test))
 print('erros: ', erros)
 print("Erros:\n" + str(np.round(Error_Test)))
 print("Percentual: {:.2f}%".format((erros * 100)/q))
-print('hiperbolica')
