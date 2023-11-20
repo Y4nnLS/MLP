@@ -21,7 +21,7 @@ d = happy
 
 print(d)
 
-numEpocas = 1000      # Número de épocas.
+numEpocas = 500      # Número de épocas.
 q = len(df)                # Número de padrões.
 
 eta = 0.01            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
@@ -143,3 +143,4 @@ print(np.round(Error_Test))
 print('erros: ', erros)
 print("Erros:\n" + str(np.round(Error_Test)))
 print("Percentual: {:.2f}%".format((erros * 100)/q))
+print('hiperbolica')

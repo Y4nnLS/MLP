@@ -21,7 +21,7 @@ d = happy
 
 print(d)
 
-numEpocas = 1000      # Número de épocas.
+numEpocas = 500      # Número de épocas.
 q = len(df)                # Número de padrões.
 
 eta = 0.05            # Taxa de aprendizado ( é interessante alterar para avaliar o comportamento)
